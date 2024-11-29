@@ -6,7 +6,7 @@
 
 - This project was developed and tested locally using [minikube](https://minikube.sigs.k8s.io/docs/) in a home lab environment. This may affect my runtime versus native Kubernetes runtime commands/application.
 - I chose [Python](https://www.python.org/) for the hello world web app as it's the language I'm most comfortable in, however I could have also chosen Rust using [Rocket.rs](https://rocket.rs/) or TypeScript using [Express](https://www.npmjs.com/package/express).
-- I've utilised [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) to host my [Docker image](https://github.com/AbstractUmbra/GrahaTia/pkgs/container/obnoxious-albatross) for use within the K8s deployment.
+- I've utilised [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) to host my [Docker image](https://github.com/users/AbstractUmbra/packages/container/package/obnoxious-albatross) for use within the K8s deployment.
 - As this is a technical test I have left [`flask`](https://flask.palletsprojects.com/en/stable/) running in it's debug mode. In a production environment we'd switch to another [WSGI](https://en.wikipedia.org/wiki/Web_Server_Gateway_Interface) instead of the native `Flask.run()` method.
 
 ### Docker image notes
