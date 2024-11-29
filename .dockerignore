@@ -1,0 +1,10 @@
+# python bytecode
+__pycache__/
+*.py[cod]
+
+.git/
+.github/
+.gitignore
+.venv/
+k8s/
+README.md
