@@ -26,7 +26,7 @@
 
 1. Clone the repository and enter directory
 ```sh
-git pull https://github.com/AbstractUmbra/obnoxious-albatross.git
+git clone https://github.com/AbstractUmbra/obnoxious-albatross.git
 cd obnoxious-albatross
 ```
 
