@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: obnoxious-albatross-deploy
+  labels:
+    app: obnoxious-albatross-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: obnoxious-albatross-app
+  template:
+    metadata:
+      labels:
+        app: obnoxious-albatross-app
+    spec:
+      containers:
+        - name: obnoxious-albatross
+          image: ghcr.io/abstractumbra/obnoxious-albatross:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              cpu: "0.5"
+              memory: "100Mi"
+            limits:
+              cpu: "1.0"
+              memory: "200Mi"
