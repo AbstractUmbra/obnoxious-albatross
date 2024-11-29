@@ -11,7 +11,7 @@
 
 ### Docker image notes
 
-- With the consideration of security for a web app, I would never run this facing an exposed interface, meaning that the container would be directly accessible on the public internet. I would personally run this behind a reverse proxy like [NGINX](https://nginx.org/en/) or [Caddy](https://caddyserver.com/).
+- With the consideration of security for a web app, I would never run this facing an exposed interface, meaning that the container would be directly accessible on the public internet. I would personally run this behind a reverse proxy like [NGINX](https://nginx.org/en/) or [Caddy](https://caddyserver.com/) with SSL/TLS configured.
 - Added to the previous note, we would also switch to using a dedicated WSGI application, instead of the Flask native method of running, which also defaults to running in debug mode. This has been considered and deemed outside the scope of the test, minus the discussion around it's security implication.
 
 ## Setup
@@ -48,37 +48,27 @@ docker run -p 8000:8000 ghcr.io/abstractumbra/obnoxious-albatross:latest # add t
 <details>
 <summary>Kubernetes deployment and service</summary>
 
-1. (Optional) Pull the docker image to ensure it's accessible.
-```sh
-docker pull ghcr.io/abstractumbra/obnoxious-albatross:latest
-```
-
-1. (Optional) Build and run the Docker image as a test.
-```sh
-docker build -t ghcr.io/abstractumbra/obnoxious-albatross:latest .
-```
-
-1. Create the Kubernetes namespace.
+Create the Kubernetes namespace.
 ```sh
 kubectl create namespace obnoxious-albatross
 ```
 
-1. Create the deployment.
+Create the deployment.
 ```sh
 kubectl apply -f k8s/deployment.yaml -n obnoxious-albatross
 ```
 
-1. (Optional) View deployment logs.
+(Optional) View deployment logs.
 ```sh
 kubectl logs -f deployment/obnoxious-albatross-deploy -n obnoxious-albatross
 ```
 
-1. Create the service
+Create the service
 ```sh
 kubectl apply -f k8s/service.yaml -n obnoxious-albatross
 ```
 
-1. (Optional) Verify service was created and IP assigned
+(Optional) Verify service was created and IP assigned
 ```sh
 kubectl get svc -n obnoxious-albatross # add the -w flag to `get svc` to watch command output for changes
 ```
@@ -96,6 +86,11 @@ kubectl delete -f k8s/service.yaml
 Remove Kubernetes deployment
 ```sh
 kubectl delete -f k8s/deployment.yaml
+```
+
+Remove Kubernetes namespace
+```sh
+kubectl delete namespace obnoxious-albatross
 ```
 
 Remove Docker image
