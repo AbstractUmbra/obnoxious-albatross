@@ -71,6 +71,14 @@ kubectl apply -f k8s/service.yaml -n obnoxious-albatross
 (Optional) Verify service was created and IP assigned
 ```sh
 kubectl get svc -n obnoxious-albatross # add the -w flag to `get svc` to watch command output for changes
+
+# (minikube) once above is complete, I had to port-forward as minikube did not allow the allocation of an external ip
+# to access the cluster externally
+kubectl port-forward deployment/obnoxious-albatross-deploy -n obnoxious-albatross 8080:8000
+
+# open a new terminal and issue the following command to check the deployed pods and containers are working
+# and that we get the hello world response
+curl -s http://localhost:8080
 ```
 
 </details>
