@@ -9,10 +9,14 @@
 - I've utilised [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) to host my [Docker image](https://github.com/users/AbstractUmbra/packages/container/package/obnoxious-albatross) for use within the K8s deployment.
 - As this is a technical test I have left [`flask`](https://flask.palletsprojects.com/en/stable/) running in it's debug mode. In a production environment we'd switch to another [WSGI](https://en.wikipedia.org/wiki/Web_Server_Gateway_Interface) instead of the native `Flask.run()` method.
 
-### Docker image notes
+### Security notes
 
 - With the consideration of security for a web app, I would never run this facing an exposed interface, meaning that the container would be directly accessible on the public internet. I would personally run this behind a reverse proxy like [NGINX](https://nginx.org/en/) or [Caddy](https://caddyserver.com/) with SSL/TLS configured.
+  - Additionally, being behind a firewall like [ufw](https://help.ubuntu.com/community/UFW) as well as implementing [fail2ban](https://github.com/fail2ban/fail2ban) are standard practices for non-enterprise machines in my opinion, I would do this prior to exposing internet facing services.
 - Added to the previous note, we would also switch to using a dedicated WSGI application, instead of the Flask native method of running, which also defaults to running in debug mode. This has been considered and deemed outside the scope of the test, minus the discussion around it's security implication.
+- If we were going the route of no public endpoints, we would implement an authentication system like [OAuth2](https://oauth.net/2/) or an alternate means of securely providing API tokens or similar.
+
+If this were in a cloud/enterprise environment then the steps above might not be as fitting. If we use Azure hosting as the example then you would use [Azure Firewall](https://learn.microsoft.com/en-us/azure/firewall/overview) and other related cloud native security features, like [RBAC](https://learn.microsoft.com/en-us/azure/role-based-access-control/overview) and [API Gateway](https://learn.microsoft.com/en-us/azure/api-management/api-management-gateways-overview).
 
 ## Setup
 ### Required Software
@@ -78,7 +82,7 @@ kubectl port-forward deployment/obnoxious-albatross-deploy -n obnoxious-albatros
 
 # open a new terminal and issue the following command to check the deployed pods and containers are working
 # and that we get the hello world response
-curl -s http://localhost:8080
+curl -s http://localhost:8080 # or port 8000 if you did not need to portforward as above
 ```
 
 </details>
